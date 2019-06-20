@@ -69,6 +69,7 @@ class GameBoard {
             }
         }
     }
+
     private boolean checkRowForWin(String[][] board) {
 
         for (int i = 0; i < MAX_SQUARE_BOARD_SIZE; i++) {

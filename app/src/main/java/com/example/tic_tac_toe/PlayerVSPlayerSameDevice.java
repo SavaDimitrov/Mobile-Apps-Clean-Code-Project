@@ -35,8 +35,8 @@ public class PlayerVSPlayerSameDevice extends AppCompatActivity implements View.
                 String buttonID = "button_" + i + j;
                 int resourceID = getResources().getIdentifier(buttonID, "id", getPackageName());
 
-                Button storeViewById = findViewById(resourceID);
-                board.setButtonViaIndex(i, j, storeViewById);
+                Button storedViewById = findViewById(resourceID);
+                board.setButtonViaIndex(i, j, storedViewById);
                 board.getButtonByIndex(i, j).setOnClickListener(this);
             }
         }
