@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class PlayerVSPlayerSameDevice extends AppCompatActivity implements View.OnClickListener {
+
     private static final int PLAYER_ONE_NUMBER = 1;
     private static final int PLAYER_TWO_NUMBER = 2;
     private static final int MAX_GAME_ROUNDS = 9;
@@ -34,8 +35,8 @@ public class PlayerVSPlayerSameDevice extends AppCompatActivity implements View.
 
                 String buttonID = "button_" + i + j;
                 int resourceID = getResources().getIdentifier(buttonID, "id", getPackageName());
-
                 Button storedViewById = findViewById(resourceID);
+
                 board.setButtonViaIndex(i, j, storedViewById);
                 board.getButtonByIndex(i, j).setOnClickListener(this);
             }
@@ -67,21 +68,32 @@ public class PlayerVSPlayerSameDevice extends AppCompatActivity implements View.
 
         if (board.getRoundCount() >= MIN_ROUNDS_ELAPSED_FOR_WIN) {
             announceWinnerOrChangeTurn();
+
         } else {
             board.setPlayer1Turn(!board.getPlayer1Turn());
         }
     }
 
+    /*
+    Can't avoid having the change turn in this function. After 5 rounds of the game
+    this function will always be called and if no winner -> change player turn.
+    The change turn can't be added on line 71. If there is a winner it will
+    change the logic of the game, i.e. the game always starts with "X" and if change turn
+    is on line 71 the game will start with "O", after the first cycle. And will change it every
+    cycle after that.
+    */
     private void announceWinnerOrChangeTurn() {
 
         if (board.checkForWin()) {
             if (board.getPlayer1Turn()) {
                 playerWon(PLAYER_ONE_NUMBER);
+
             } else {
                 playerWon(PLAYER_TWO_NUMBER);
             }
         } else if (board.getRoundCount() == MAX_GAME_ROUNDS) {
             draw();
+
         } else {
             board.setPlayer1Turn(!board.getPlayer1Turn());
         }
@@ -111,7 +123,6 @@ public class PlayerVSPlayerSameDevice extends AppCompatActivity implements View.
         player1.setPlayerPoints(0);
         player2.setPlayerPoints(0);
         updatePointsText();
-
         board.resetBoard();
     }
 
